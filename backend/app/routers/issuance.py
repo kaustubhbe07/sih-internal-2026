@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response, UploadF
 from sqlalchemy.orm import Session
 
 from app.ledger.db import get_db
-from app.ledger.repository import InstituteRepository, CredentialRepository, RevocationRepository, get_chain_hashes
+from app.ledger.repository import InstituteRepository, CredentialRepository, RevocationRepository
 from app.core.security import get_current_institution
 from app.crypto.hashing import get_prev_hash
 from app.services.issuance_service import issue_single, issue_bulk, validate_custom_fields
@@ -41,12 +41,15 @@ def issue_credential(
     if not institution:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Institution not found.")
 
+    if cred_repo.exists_for_student(institution.id, body.roll_no, body.degree):
+        raise HTTPException(status_code=400, detail="Credential already exists for this roll number and degree.")
+
     # Validate custom fields against schema
     errors = validate_custom_fields(institution, body.custom_fields)
     if errors:
         raise HTTPException(status_code=400, detail={"errors": errors})
 
-    hash_list = get_chain_hashes(db, institution.id)
+    hash_list = cred_repo.get_chain_hashes(institution.id)
     prev_hash = get_prev_hash(hash_list)
 
     credential = issue_single(
@@ -89,6 +92,7 @@ def bulk_issue_credentials(
     # Validation phase
     rows = []
     errors = []
+    seen_keys = set()
 
     custom_field_names = []
     if institution.field_schema:
@@ -103,6 +107,21 @@ def bulk_issue_credentials(
         for col in ["student_name", "roll_no", "degree", "issue_date"]:
             if col not in row or not row[col].strip():
                 missing.append(col)
+
+        if not missing:
+            roll_val = row["roll_no"].strip()
+            degree_val = row["degree"].strip()
+            
+            # Check duplicate in CSV
+            key = (roll_val, degree_val)
+            if key in seen_keys:
+                errors.append(f"Row {i}: Duplicate entry in CSV for roll_no {key[0]} and degree {key[1]}")
+            seen_keys.add(key)
+            
+            # Check duplicate in DB
+            cred_repo = CredentialRepository(db)
+            if cred_repo.exists_for_student(institution.id, key[0], key[1]):
+                errors.append(f"Row {i}: Credential already exists in database for roll_no {key[0]} and degree {key[1]}")
 
         # Ensure required custom fields are present
         for field in (institution.field_schema or []):

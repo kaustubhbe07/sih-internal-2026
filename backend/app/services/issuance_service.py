@@ -93,7 +93,9 @@ def issue_single(
         signature=signature,
         qr_payload=None,
     )
-    repo.insert_credential(db, credential)
+    
+    cred_repo = repo.CredentialRepository(db)
+    cred_repo.insert(credential)
 
     # Set QR payload now that we have the credential ID.
     credential.qr_payload = f"{settings.BASE_URL}/verify/{credential.id}"
@@ -109,7 +111,8 @@ def issue_bulk(
     Issue multiple credentials in order, chaining each to the previous.
     Caller is responsible for validation before calling this.
     """
-    hash_list = repo.get_chain_hashes(db, institution.id)
+    cred_repo = repo.CredentialRepository(db)
+    hash_list = cred_repo.get_chain_hashes(institution.id)
     prev_hash = get_prev_hash(hash_list)
 
     results = []

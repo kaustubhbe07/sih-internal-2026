@@ -27,12 +27,14 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
       4. Revocation — check if a revocation event exists
     """
     # ─── Fetch the credential ────────────────────────────────────────
-    credential = repo.get_credential_by_id(db, cred_uuid)
+    cred_repo = repo.CredentialRepository(db)
+    credential = cred_repo.get_by_credential_id(cred_uuid)
     if not credential:
         return VerifyResponse(status="NOT_FOUND")
 
     # ─── Fetch the issuing institution ───────────────────────────────
-    institution = repo.get_institution_by_id(db, credential.institution_id)
+    inst_repo = repo.InstituteRepository(db)
+    institution = inst_repo.get_institute_by_id(credential.institution_id)
 
     # ─── CHECK 1: Hash validity ──────────────────────────────────────
     recomputed_hash = compute_credential_hash(
@@ -48,7 +50,7 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
 
     # ─── CHECK 2: Chain integrity (genesis → this credential) ────────
     chain_intact = True
-    full_chain = repo.get_chain(db, credential.institution_id)
+    full_chain = cred_repo.get_chain(credential.institution_id)
 
     expected_prev_hash = "0" * 64
     for record in full_chain:
@@ -82,7 +84,8 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
         )
 
     # ─── CHECK 4: Revocation status ──────────────────────────────────
-    revocation_event = repo.get_revocation_event(db, credential.id)
+    rev_repo = repo.RevocationRepository(db)
+    revocation_event = rev_repo.get_by_credential_id(credential.id)
 
     revocation_info = None
     if revocation_event:
