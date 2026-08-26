@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+backend/venv/
+venv/
+
+# Keys (RSA private keys)
+backend/keys/
+keys/
+
+# Database
+*.db
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test cache
+.pytest_cache/
+
+# EasyOCR model cache
+.EasyOCR/
+
+# Build artifacts
+*.whl
