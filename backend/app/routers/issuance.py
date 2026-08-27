@@ -148,9 +148,18 @@ def bulk_issue_credentials(
             continue
 
         custom_fields = {}
-        for cname in custom_field_names:
-            if cname in row and row[cname].strip():
-                custom_fields[cname] = row[cname].strip()
+        
+        # Determine valid custom fields: if schema exists, use it; otherwise, use any non-standard column
+        if custom_field_names:
+            for cname in custom_field_names:
+                if cname in row and row[cname].strip():
+                    custom_fields[cname] = row[cname].strip()
+        else:
+            # Prototype Mode: Allow arbitrary custom fields if no schema is strictly defined
+            standard_cols = {"student_name", "roll_no", "degree", "issue_date", "cgpa"}
+            for col_name, col_val in row.items():
+                if col_name and col_name not in standard_cols and col_val and col_val.strip():
+                    custom_fields[col_name] = col_val.strip()
 
         rows.append({
             "row_number": i,

@@ -25,7 +25,7 @@ def validate_custom_fields(institution: Institution, custom_fields: dict | None)
     schema = institution.field_schema or []
 
     if not schema and custom_fields:
-        errors.append("This institution has no custom fields defined.")
+        # In prototype mode, allow arbitrary custom fields if no schema is strictly defined
         return errors
 
     if not schema:

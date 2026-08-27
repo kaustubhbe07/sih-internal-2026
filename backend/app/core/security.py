@@ -1,12 +1,3 @@
-"""
-JWT authentication and session security.
-
-Provides:
-    - create_access_token()     — encodes a JWT with institution_id in the payload
-    - get_current_institution() — FastAPI dependency that extracts and validates
-                                  the JWT from the Authorization header
-"""
-
 from datetime import datetime, timedelta
 
 from fastapi import Depends, HTTPException, status

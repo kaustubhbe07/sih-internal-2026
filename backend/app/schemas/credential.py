@@ -43,6 +43,8 @@ class LoginResponse(BaseModel):
     """Returned on successful login."""
     access_token: str
     token_type: str = "bearer"
+    institution_id: str
+    institution_name: str
 
 
 # ── Issue endpoint ───────────────────────────────────────────────────────

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certify — Blockchain Digital Credential Platform</title>
+    <meta name="description" content="Issue secure, verifiable digital certificates, badges, and academic credentials on Certify's blockchain platform — building trust and saving time.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Red+Hat+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- SPLASH SCREEN ANIMATION -->
+    <div id="splash-screen">
+        <div id="splash-logo-container">
+            <svg class="splash-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="draw-doc" d="M8 4 h 16 l 8 8 v 24 h -24 z" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round"/>
+                <path class="draw-fold" d="M24 4 v 8 h 8" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round"/>
+                <path class="draw-tick" d="M13 22 l 4 4 l 8 -9" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="splash-text">Certify</span>
+        </div>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="#" class="nav-logo">
+                <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Document Body -->
+                    <path d="M8 4 h 16 l 8 8 v 24 h -24 z" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round"/>
+                    <!-- Fold -->
+                    <path d="M24 4 v 8 h 8" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round"/>
+                    <!-- Tick -->
+                    <path d="M13 22 l 4 4 l 8 -9" fill="none" stroke="#16a34a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">Certify</span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">Solutions</a></li>
+                <li><a href="#credentials">Credentials</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+                <li><a href="#testimonials">About</a></li>
+            </ul>
+
+            <!-- CTA Buttons -->
+            <div class="nav-actions">
+                <a href="login.html" class="btn-outline-nav">Log In</a>
+                <a href="login.html?signup=true" class="btn-primary-nav">Sign Up</a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">Solutions</a></li>
+                <li><a href="#credentials">Credentials</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+                <li><a href="#testimonials">About</a></li>
+            </ul>
+            <div class="mobile-nav-actions">
+                <a href="#" class="btn-outline-nav">Verify Certificate</a>
+                <a href="dashboard.html" class="btn-primary-nav">Go to Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span class="pill-dot"></span>
+                    <span>Blockchain Powered</span>
+                </div>
+                <h1 class="hero-title">
+                    Hiring with<br>Verifiable<br><span class="text-green" id="typewriter">Badges.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Instantly issue digitally signed, tamper-proof degrees. Empower institutions and allow employers to instantly validate authenticity via secure hash-chains and QR codes.
+                </p>
+                <div class="hero-buttons">
+                    <a href="login.html" class="btn-dark">
+                        Institute Login &rarr;
+                    </a>
+                    <a href="dashboard.html?mode=verifier#verifier" class="btn-outline-verify">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5c0-1.1.9-2 2-2h2M17 3h2c1.1 0 2 .9 2 2v2M21 17v2c0 1.1-.9 2-2 2h-2M7 21H5c-1.1 0-2-.9-2-2v-2M8 12h8M12 8v8"/></svg>
+                        Verify a Credential
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <!-- Center Cert -->
+                <div class="main-cert">
+                    <div class="cert-logo-area">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/NIT_Rourkela_logo.svg/1200px-NIT_Rourkela_logo.svg.png" alt="NITR Logo" width="40" height="40" style="object-fit: contain; margin-bottom: 8px;">
+                        <div class="cert-inst-name">NATIONAL INSTITUTE OF TECHNOLOGY<br>ROURKELA</div>
+                    </div>
+                    <div class="cert-title-text">Degree Certificate</div>
+                    <div class="cert-small-text">This certifies that</div>
+                    <div class="cert-student-name">Student Name</div>
+                    <div class="cert-desc-text">Has successfully completed the academic requirements for<br>the Bachelor of Technology.</div>
+                    
+                    <div class="cert-bottom">
+                        <div class="cert-verified-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            VERIFIED
+                        </div>
+                        <div class="cert-qr-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating steps -->
+                <div class="float-step step-1">
+                    <div class="step-num color-blue">1</div>
+                    <div class="step-content">
+                        <strong>Issue</strong>
+                        <p>Institution issues digitally signed credential via dashboard.</p>
+                    </div>
+                </div>
+                <div class="float-step step-2">
+                    <div class="step-num color-green">2</div>
+                    <div class="step-content">
+                        <strong>Hash-chain</strong>
+                        <p>Saved to an immutable ledger. Editing any field breaks the hash instantly.</p>
+                    </div>
+                </div>
+                <div class="float-step step-3">
+                    <div class="step-num color-purple">3</div>
+                    <div class="step-content">
+                        <strong>Scan & Verify</strong>
+                        <p>Employer scans the QR code or looks up hash on public portal.</p>
+                    </div>
+                </div>
+                <div class="float-step step-4">
+                    <div class="step-num color-yellow">4</div>
+                    <div class="step-content">
+                        <strong>Validation</strong>
+                        <p>Authenticity proven instantly without contacting the university.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TRUSTED BY ===== -->
+    <section class="trusted-by">
+        <div class="container">
+            <p class="trusted-label">Trusted by <strong>500+</strong> Leading Universities & Organizations</p>
+            <div class="logo-strip">
+                <div class="partner-logo">🏛️ <span>National University</span></div>
+                <div class="partner-logo">🎓 <span>Tech Institute</span></div>
+                <div class="partner-logo">🏫 <span>Global Academy</span></div>
+                <div class="partner-logo">🏢 <span>Enterprise Corp</span></div>
+                <div class="partner-logo">📚 <span>Edu Foundation</span></div>
+                <div class="partner-logo">🔬 <span>Research Labs</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS SECTION ===== -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="5000000">0</div>
+                    <div class="stat-suffix">+</div>
+                    <p class="stat-label">Digital Credentials Issued</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="500">0</div>
+                    <div class="stat-suffix">+</div>
+                    <p class="stat-label">Institutions & Partners</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-suffix">+</div>
+                    <p class="stat-label">Countries Worldwide</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-suffix">%</div>
+                    <p class="stat-label">Tamper-Proof Verification</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-pill">Platform Capabilities</span>
+                <h2 class="section-title">Everything You Need for <span class="gradient-text">Digital Credentialing</span></h2>
+                <p class="section-subtitle">A complete ecosystem to design, issue, manage, and verify digital credentials at scale.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="2" y="2" width="24" height="24" rx="5" stroke="#16a34a" stroke-width="2"/><path d="M8 14l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Blockchain Security</h3>
+                    <p>Every credential is recorded on an immutable blockchain ledger, making fraud impossible and trust guaranteed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#16a34a" stroke-width="2"/><path d="M14 8v6l4 3" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Instant Verification</h3>
+                    <p>One-click verification for employers and institutions. QR code scanning for real-time credential validation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="4" width="8" height="8" rx="1" fill="#16a34a"/><rect x="16" y="4" width="8" height="8" rx="1" fill="#16a34a"/><rect x="4" y="16" width="8" height="8" rx="1" fill="#16a34a"/><rect x="18" y="18" width="4" height="4" fill="#16a34a"/></svg>
+                    </div>
+                    <h3>QR Code Support</h3>
+                    <p>Auto-generated QR codes on every credential linking to blockchain verification for instant trust.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 8h20M4 14h20M4 20h20" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><circle cx="22" cy="20" r="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><path d="M20.5 20l1 1 2.5-2.5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>ERP & LMS Integration</h3>
+                    <p>Seamlessly connect with your existing university ERP and Learning Management Systems via API.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="#16a34a" stroke-width="2"/><path d="M9 11c0-1.66 2.24-3 5-3s5 1.34 5 3" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><text x="10" y="21" fill="#16a34a" font-size="8" font-weight="bold">あA</text></svg>
+                    </div>
+                    <h3>Multi-Language Support</h3>
+                    <p>Issue certificates in over 200 languages with full Unicode support for global institutions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="6" width="22" height="16" rx="3" stroke="#16a34a" stroke-width="2"/><path d="M8 12h12M8 16h8" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="8" r="4" fill="#16a34a"/><path d="M20.5 8l1 1 2-2" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Custom Branding</h3>
+                    <p>White-label certificates with your institution's logo, colors, domain, and custom email delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-pill">Simple Workflow</span>
+                <h2 class="section-title">How <span class="gradient-text">Certify</span> Works</h2>
+                <p class="section-subtitle">From design to verification — streamline your entire credentialing process in four simple steps.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="6" fill="#dcfce7"/><path d="M16 16h16M16 22h12M16 28h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="30" r="6" fill="#16a34a"/><path d="M32 30h4M34 28v4" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Design & Configure</h3>
+                    <p>Use our built-in certificate designer to create stunning templates with your branding.</p>
+                </div>
+                <div class="step-connector">
+                    <svg width="60" height="24" viewBox="0 0 60 24" fill="none"><path d="M0 12h55m0 0l-6-6m6 6l-6 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="6" fill="#dcfce7"/><path d="M18 20l6 6 8-10" stroke="#16a34a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Issue in Bulk</h3>
+                    <p>Upload a CSV or sync with your ERP to issue thousands of credentials instantly.</p>
+                </div>
+                <div class="step-connector">
+                    <svg width="60" height="24" viewBox="0 0 60 24" fill="none"><path d="M0 12h55m0 0l-6-6m6 6l-6 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="6" fill="#dcfce7"/><rect x="14" y="12" width="20" height="24" rx="3" stroke="#16a34a" stroke-width="2"/><circle cx="24" cy="32" r="2" fill="#16a34a"/><path d="M20 16h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Deliver to Wallet</h3>
+                    <p>Recipients receive credentials in their digital wallet — shareable anywhere, anytime.</p>
+                </div>
+                <div class="step-connector">
+                    <svg width="60" height="24" viewBox="0 0 60 24" fill="none"><path d="M0 12h55m0 0l-6-6m6 6l-6 6" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="6" fill="#dcfce7"/><circle cx="24" cy="24" r="10" stroke="#16a34a" stroke-width="2"/><path d="M20 24l3 3 6-6" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Verify Instantly</h3>
+                    <p>Anyone can verify credentials via QR code or URL — one click, zero friction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CREDENTIAL TYPES ===== -->
+    <section class="credentials" id="credentials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-pill">Credential Types</span>
+                <h2 class="section-title">Issue Every Type of <span class="gradient-text">Digital Credential</span></h2>
+                <p class="section-subtitle">From academic degrees to micro-badges — Certify supports all credential formats.</p>
+            </div>
+            <div class="credentials-grid">
+                <div class="credential-card">
+                    <div class="credential-icon">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><rect x="4" y="8" width="48" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M16 20h24M16 26h20M16 32h16" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><circle cx="44" cy="40" r="8" fill="#16a34a"/><path d="M41 40l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Academic Certificates</h3>
+                    <p>Degrees, diplomas, transcripts, and marksheets with full blockchain verification and NAD compliance.</p>
+                    <a href="#" class="card-link">Learn more →</a>
+                </div>
+                <div class="credential-card">
+                    <div class="credential-icon">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="24" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M22 24l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 40l6 8 6-8" fill="#16a34a"/><path d="M28 40l6 8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><path d="M28 40l-6 8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Digital Badges</h3>
+                    <p>Open Badges standard micro-credentials for skills recognition, course completions, and achievements.</p>
+                    <a href="#" class="card-link">Learn more →</a>
+                </div>
+                <div class="credential-card">
+                    <div class="credential-icon">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><rect x="8" y="8" width="40" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M20 20h16M20 26h12M20 32h8" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/><path d="M36 36l6 6" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/><rect x="30" y="30" width="10" height="10" rx="2" stroke="#16a34a" stroke-width="1.5" fill="none"/></svg>
+                    </div>
+                    <h3>Training Certificates</h3>
+                    <p>Corporate training, professional development, and workshop completion certificates at scale.</p>
+                    <a href="#" class="card-link">Learn more →</a>
+                </div>
+                <div class="credential-card">
+                    <div class="credential-icon">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><rect x="6" y="10" width="44" height="36" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><circle cx="28" cy="24" r="6" stroke="#16a34a" stroke-width="2"/><path d="M18 38c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Participation Certificates</h3>
+                    <p>Conferences, hackathons, webinars, and event participation credentials with instant sharing.</p>
+                    <a href="#" class="card-link">Learn more →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMPLIANCE SECTION ===== -->
+    <section class="compliance" id="compliance">
+        <div class="container">
+            <div class="compliance-wrapper">
+                <div class="compliance-content">
+                    <span class="section-pill">Regulatory Compliance</span>
+                    <h2 class="section-title">Built for <span class="gradient-text">India's Digital Education</span> Framework</h2>
+                    <p class="section-subtitle">Fully aligned with NEP 2020, NAD, ABC, and DigiLocker — ensuring your institution meets every regulatory requirement.</p>
+                    <div class="compliance-badges">
+                        <div class="compliance-badge">
+                            <div class="badge-icon-wrap">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>NEP 2020</strong>
+                                <p>National Education Policy compliant credentialing</p>
+                            </div>
+                        </div>
+                        <div class="compliance-badge">
+                            <div class="badge-icon-wrap">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>NAD Integration</strong>
+                                <p>Direct National Academic Depository connectivity</p>
+                            </div>
+                        </div>
+                        <div class="compliance-badge">
+                            <div class="badge-icon-wrap">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>ABC Credits</strong>
+                                <p>Academic Bank of Credits seamless integration</p>
+                            </div>
+                        </div>
+                        <div class="compliance-badge">
+                            <div class="badge-icon-wrap">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/><path d="M8 12l3 3 5-5" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div>
+                                <strong>ISO 27001</strong>
+                                <p>Enterprise-grade information security certification</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="compliance-visual">
+                    <div class="security-grid">
+                        <div class="security-card">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 4L6 10v10c0 9.27 5.97 17.94 14 20 8.03-2.06 14-10.73 14-20V10L20 4z" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M14 20l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>SOC 2 Type II</span>
+                        </div>
+                        <div class="security-card">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M14 20l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>CMMI Level 5</span>
+                        </div>
+                        <div class="security-card">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M14 20l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>GDPR Ready</span>
+                        </div>
+                        <div class="security-card">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 4L6 10v10c0 9.27 5.97 17.94 14 20 8.03-2.06 14-10.73 14-20V10L20 4z" fill="#16a34a"/><path d="M14 20l4 4 8-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span>DigiLocker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-pill">What Our Partners Say</span>
+                <h2 class="section-title">Trusted by <span class="gradient-text">Education Leaders</span></h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Certify transformed our entire credentialing process. We went from weeks of manual work to issuing 10,000+ certificates in minutes. The blockchain verification gives our alumni real trust."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DR</div>
+                        <div>
+                            <strong>Dr. Rajesh Kumar</strong>
+                            <p>Registrar, National Technical University</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"The NAD and ABC integration was seamless. Our NAAC accreditation process became significantly smoother after adopting Certify's blockchain credentialing platform."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div>
+                            <strong>Prof. Sunita Patel</strong>
+                            <p>Dean of Academics, Global Business School</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"We issue digital badges for 50+ corporate training programs. Certify's API integration with our LMS made it effortless. Our employees love the LinkedIn sharing feature."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AV</div>
+                        <div>
+                            <strong>Anita Verma</strong>
+                            <p>VP of Learning, TechCorp India</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="cta-banner">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Credentialing?</h2>
+                <p>Join 500+ institutions already issuing blockchain-verified digital credentials with Certify.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn-cta-primary">
+                        Schedule a Free Demo
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="#" class="btn-cta-secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo">
+                        <svg class="logo-icon" viewBox="0 0 40 40" width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="4" width="36" height="32" rx="4" stroke="#16a34a" stroke-width="2.5" fill="#dcfce7"/>
+                            <line x1="10" y1="12" x2="30" y2="12" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="10" y1="18" x2="25" y2="18" stroke="#86efac" stroke-width="2" stroke-linecap="round"/>
+                            <line x1="10" y1="24" x2="22" y2="24" stroke="#86efac" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="28" cy="28" r="9" fill="#16a34a"/>
+                            <path d="M24 28.5L27 31L33 25" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="logo-text">Certify</span>
+                    </a>
+                    <p class="footer-desc">Building trust in education through blockchain-powered digital credentials. Secure, verifiable, and instantly shareable.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 7.5v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5 0-.28-.03-.56-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z" stroke="currentColor" stroke-width="1.5"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="#">Digital Certificates</a></li>
+                        <li><a href="#">Digital Badges</a></li>
+                        <li><a href="#">Certificate Designer</a></li>
+                        <li><a href="#">Digital Wallet</a></li>
+                        <li><a href="#">University ERP</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#">Higher Education</a></li>
+                        <li><a href="#">EdTech & Training</a></li>
+                        <li><a href="#">Enterprises</a></li>
+                        <li><a href="#">Government</a></li>
+                        <li><a href="#">NAAC Accreditation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Knowledge Base</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Support Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Certify. All rights reserved. Built with trust on blockchain.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            const splashLogo = document.getElementById('splash-logo-container');
+            const navLogo = document.querySelector('.nav-logo');
+            
+            // Wait for drawing animation to finish
+            setTimeout(() => {
+                // Get the exact dimensions of both logos
+                const targetRect = navLogo.getBoundingClientRect();
+                const splashRect = splashLogo.getBoundingClientRect();
+                
+                // Calculate centers to align exactly
+                const targetCenterX = targetRect.left + (targetRect.width / 2);
+                const targetCenterY = targetRect.top + (targetRect.height / 2);
+                
+                const splashCenterX = splashRect.left + (splashRect.width / 2);
+                const splashCenterY = splashRect.top + (splashRect.height / 2);
+                
+                const deltaX = targetCenterX - splashCenterX;
+                const deltaY = targetCenterY - splashCenterY;
+                
+                // Calculate the exact scale ratio
+                const scale = targetRect.width / splashRect.width;
+                
+                // Animate to exact position
+                splashLogo.style.transition = 'transform 0.8s cubic-bezier(0.25, 1, 0.3, 1)';
+                splashLogo.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+                
+                // Fade out the overlay background
+                splashScreen.style.transition = 'background-color 0.8s ease';
+                splashScreen.style.backgroundColor = 'transparent';
+                
+                // Once animation finishes, swap to real navbar logo
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    navLogo.style.opacity = '1';
+                }, 800);
+                
+            }, 1600); // 1.6s delay lets the initial SVG drawing finish
+            
+            // Rotating words logic
+            const words = ["Badges.", "Diploma.", "Degree.", "Digital Credentials.", "Certificates.", "Marksheets."];
+            let currentWordIndex = 0; // Start at "Badges."
+            const typewriterEl = document.getElementById("typewriter");
+            
+            setInterval(() => {
+                // Slide up and fade out
+                typewriterEl.style.transform = 'translateY(-20px)';
+                typewriterEl.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // Change the word
+                    currentWordIndex = (currentWordIndex + 1) % words.length;
+                    typewriterEl.textContent = words[currentWordIndex];
+                    
+                    // Teleport the element down instantly (invisible)
+                    typewriterEl.style.transition = 'none';
+                    typewriterEl.style.transform = 'translateY(20px)';
+                    
+                    // Force a reflow so the browser registers the teleport before restoring the transition
+                    void typewriterEl.offsetWidth;
+                    
+                    // Slide up to normal position and fade in
+                    typewriterEl.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                    typewriterEl.style.transform = 'translateY(0)';
+                    typewriterEl.style.opacity = '1';
+                    
+                }, 500); // 500ms matches the CSS fade-out transition
+            }, 3000); // Change word every 3 seconds
+        });
+    </script>
+</body>
+</html>

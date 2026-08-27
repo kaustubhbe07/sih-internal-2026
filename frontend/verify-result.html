@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Result - Authentic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: #0f172a; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; }
+        .result-container { background: white; width: 100%; max-width: 700px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 24px; }
+        .header { background: #f8fafc; padding: 16px 24px; border-bottom: 1px solid #e2e8f0; font-weight: 700; font-size: 1.125rem; }
+        .content { padding: 40px; text-align: center; }
+        
+        .icon-success { width: 64px; height: 64px; background: #16a34a; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px; color: white; }
+        .icon-success svg { width: 32px; height: 32px; }
+        
+        .status-title { font-size: 2rem; font-weight: 700; color: #16a34a; margin-bottom: 12px; letter-spacing: -0.02em; }
+        .status-desc { font-size: 0.875rem; color: #475569; max-width: 400px; margin: 0 auto 40px; line-height: 1.5; }
+        
+        .details-card { border: 1px solid #e2e8f0; border-radius: 8px; text-align: left; margin-bottom: 24px; }
+        .dc-header { padding: 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #e2e8f0; }
+        .dc-avatar { width: 48px; height: 48px; background: #e2e8f0; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #64748b; }
+        .dc-name-label { font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px; letter-spacing: 0.05em; }
+        .dc-name-val { font-size: 1.25rem; font-weight: 700; }
+        
+        .dc-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e2e8f0; }
+        .dc-cell { padding: 16px 20px; border-right: 1px solid #e2e8f0; }
+        .dc-cell:last-child { border-right: none; }
+        .dc-label { font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em; }
+        .dc-val { font-size: 0.875rem; font-weight: 600; }
+        .text-green { color: #16a34a; }
+        
+        .crypto-card { border: 1px solid #e2e8f0; border-radius: 8px; text-align: left; padding: 20px; }
+        .crypto-title { font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.05em; }
+        
+        .crypto-row { display: flex; align-items: center; margin-bottom: 12px; }
+        .crypto-row:last-child { margin-bottom: 0; }
+        .cr-label { width: 120px; font-size: 0.75rem; color: #64748b; }
+        .cr-val { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; }
+        .cr-copy { cursor: pointer; color: #64748b; }
+        
+        .actions { display: flex; justify-content: center; gap: 16px; }
+        .btn-dark { background: #0f172a; color: white; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; border: none; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .btn-light { background: #eff6ff; color: #1e3a8a; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; border: 1px solid #bfdbfe; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    
+    <div class="result-container">
+        <div class="header">Certify</div>
+        <div class="content">
+            <div class="icon-success">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            
+            <h1 class="status-title">CREDENTIAL VERIFIED</h1>
+            <p class="status-desc">This document matches the blockchain ledger and was officially signed by NIT Rourkela.</p>
+            
+            <div class="details-card">
+                <div class="dc-header">
+                    <div class="dc-avatar">AS</div>
+                    <div>
+                        <div class="dc-name-label">STUDENT NAME</div>
+                        <div class="dc-name-val">Aarav Sharma</div>
+                    </div>
+                </div>
+                <div class="dc-grid">
+                    <div class="dc-cell">
+                        <div class="dc-label">ROLL NO</div>
+                        <div class="dc-val">NITR-2023-4567</div>
+                    </div>
+                    <div class="dc-cell">
+                        <div class="dc-label">DEGREE</div>
+                        <div class="dc-val">B.Tech in Computer Science</div>
+                    </div>
+                </div>
+                <div class="dc-grid">
+                    <div class="dc-cell">
+                        <div class="dc-label">TRUE CGPA</div>
+                        <div class="dc-val text-green">9.25</div>
+                    </div>
+                    <div class="dc-cell">
+                        <div class="dc-label">DATE OF ISSUE</div>
+                        <div class="dc-val">May 15, 2024</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="crypto-card">
+                <div class="crypto-title">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    CRYPTOGRAPHIC EVIDENCE
+                </div>
+                <div class="crypto-row">
+                    <div class="cr-label">Block Hash</div>
+                    <div class="cr-val">
+                        0x8f2a...39b4c1
+                        <svg class="cr-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </div>
+                </div>
+                <div class="crypto-row">
+                    <div class="cr-label">Transaction ID</div>
+                    <div class="cr-val">
+                        0x1a9c...77d2f8
+                        <svg class="cr-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="actions">
+        <button class="btn-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Official PDF
+        </button>
+        <button class="btn-light">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Verification Report
+        </button>
+    </div>
+
+</body>
+</html>

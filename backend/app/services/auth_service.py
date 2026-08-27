@@ -160,4 +160,8 @@ def login_institution(db: Session, req: LoginRequest) -> LoginResponse:
         )
         
     token = create_access_token(str(inst.id))
-    return LoginResponse(access_token=token)
+    return LoginResponse(
+        access_token=token,
+        institution_id=str(inst.id),
+        institution_name=inst.name
+    )
