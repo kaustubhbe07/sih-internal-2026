@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certify — Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/pages/dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Red+Hat+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -79,6 +79,13 @@
         <!-- MAIN CONTENT -->
         <main class="main-content">
             
+            <!-- MOBILE TOPBAR -->
+            <div class="mobile-topbar" style="display: none;">
+                <a href="index.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.9375rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                    Back to Home
+                </a>
+            </div>
             <!-- 1. OVERVIEW VIEW -->
             <div id="overview-view" class="dashboard-view" style="display: block;">
                 <div class="content-wrapper" style="padding-top: 40px;">
@@ -126,54 +133,54 @@
             </div>
 
             <!-- 2. VERIFIER PORTAL VIEW -->
-            <div id="verifier-view" class="dashboard-view" style="display: none; background: #f8fafc; height: 100%;">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; padding: 40px 20px;">
-                    <div class="badge-immutable" style="display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; color: var(--primary); padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 24px;">
+            <div id="verifier-view" class="dashboard-view" style="display: none;">
+                <div class="verifier-container">
+                    <div class="verifier-badge">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         IMMUTABLE LEDGER ACTIVE
                     </div>
-                    <h1 style="font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 12px; text-align: center;">Verify Academic Credentials Instantly.</h1>
-                    <p style="color: #475569; max-width: 500px; margin-bottom: 40px; line-height: 1.5; text-align: center;">Access the cryptographic registry to validate certificates, diplomas, and transcripts against the institutional blockchain anchor.</p>
+                    <h1 class="verifier-header">Verify Academic Credentials Instantly.</h1>
+                    <p class="verifier-desc">Access the cryptographic registry to validate certificates, diplomas, and transcripts against the institutional blockchain anchor.</p>
                     
-                    <div style="background: white; padding: 0; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; max-width: 600px; overflow: hidden; border: 1px solid #e2e8f0;">
-                        <div class="tabs">
-                            <div class="tab active v-tab-link" onclick="switchVTab('id', this)" style="flex: 1; text-align:center;">Enter ID</div>
-                            <div class="tab v-tab-link" onclick="switchVTab('qr', this)" style="flex: 1; text-align:center;">Scan QR</div>
-                            <div class="tab v-tab-link" onclick="switchVTab('doc', this)" style="flex: 1; text-align:center;">Upload Document</div>
+                    <div class="verifier-card">
+                        <div class="verifier-tabs">
+                            <div class="verifier-tab active v-tab-link" onclick="switchVTab('id', this)">Enter ID</div>
+                            <div class="verifier-tab v-tab-link" onclick="switchVTab('qr', this)">Scan QR</div>
+                            <div class="verifier-tab v-tab-link" onclick="switchVTab('doc', this)">Upload Document</div>
                         </div>
-                        <div style="padding: 32px;">
+                        <div class="verifier-pane-content">
                             <!-- ENTER ID VIEW -->
                             <div id="v-pane-id" class="v-pane">
-                                <h3 style="font-size: 1rem; margin-bottom: 8px;">Credential Identifier</h3>
-                                <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">Enter the unique Credential ID provided by the institution, or the full SHA-256 cryptographic hash.</p>
-                                <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px 16px; margin-bottom: 16px;">
-                                    <input type="text" id="verifier-id-input" placeholder="# e.g. VH-2024-9A8B7C6D5E or a3f8...9b2c" style="width: 100%; border: none; outline: none; font-size: 0.875rem; font-family: monospace;">
+                                <h3 class="verifier-pane-title">Credential Identifier</h3>
+                                <p class="verifier-pane-desc">Enter the unique Credential ID provided by the institution, or the full SHA-256 cryptographic hash.</p>
+                                <div class="verifier-input-group">
+                                    <input type="text" id="verifier-id-input" class="verifier-input" placeholder="# e.g. VH-2024-9A8B7C6D5E or a3f8...9b2c">
                                 </div>
-                                <button onclick="verifyCredential()" style="display: block; width: 100%; background: #0f172a; color: white; padding: 16px; border-radius: 6px; font-weight: 600; text-align: center; border: none; cursor: pointer; text-decoration: none;">Verify Cryptographic Hash</button>
+                                <button onclick="verifyCredential()" class="verifier-btn" style="width: 100%;">Verify Cryptographic Hash</button>
                             </div>
 
                             <!-- SCAN QR VIEW -->
                             <div id="v-pane-qr" class="v-pane" style="display: none; text-align: center;">
-                                <h3 style="font-size: 1rem; margin-bottom: 8px;">Scan QR Code</h3>
-                                <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">Point your camera at the QR code on the certificate.</p>
-                                <div id="qr-reader" style="width: 100%; max-width: 400px; margin: 0 auto 24px; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: inset 0 2px 10px rgba(0,0,0,0.02); background: #f1f5f9;"></div>
+                                <h3 class="verifier-pane-title">Scan QR Code</h3>
+                                <p class="verifier-pane-desc">Point your camera at the QR code on the certificate.</p>
+                                <div id="qr-reader" class="qr-scanner-box"></div>
                             </div>
 
                             <!-- UPLOAD DOCUMENT VIEW -->
                             <div id="v-pane-doc" class="v-pane" style="display: none;">
-                                <h3 style="font-size: 1rem; margin-bottom: 8px;">Verify File</h3>
-                                <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 24px;">Upload a JSON credential file to verify its cryptographic signature.</p>
-                                <div onclick="document.getElementById('verify-file-upload').click()" style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 40px; text-align: center; background: #f8fafc; cursor: pointer;">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#64748b" style="margin-bottom: 16px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
-                                    <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Upload Certificate File</h4>
-                                    <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 16px;">Supports .json, .pdf, or image files</p>
-                                    <button style="background: white; border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 6px; font-weight: 600; font-size: 0.875rem; cursor: pointer; color: #0f172a;">Browse Device</button>
+                                <h3 class="verifier-pane-title">Verify File</h3>
+                                <p class="verifier-pane-desc">Upload a JSON credential file to verify its cryptographic signature.</p>
+                                <div class="upload-dropzone" onclick="document.getElementById('verify-file-upload').click()">
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="margin-bottom: 16px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
+                                    <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main);">Upload Certificate File</h4>
+                                    <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 24px;">Supports .json, .pdf, or image files</p>
+                                    <button class="verifier-btn" style="background: var(--white); color: var(--text-main); border: 1px solid var(--border-color);">Browse Device</button>
                                     <input type="file" id="verify-file-upload" accept=".json, application/json, .pdf, application/pdf, .jpg, .jpeg, image/jpeg, .png, image/png" style="display: none;" onchange="handleFileUpload(event)">
                                 </div>
                             </div>
 
-                            <div style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 6px;">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 32px; display: flex; justify-content: center; align-items: center; gap: 6px; font-weight: 600;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
                                 End-to-end institutional verification
                             </div>
                         </div>
@@ -182,57 +189,58 @@
             </div>
 
             <!-- 3. VERIFIER RESULT VIEW -->
-            <div id="verifier-result-view" class="dashboard-view" style="display: none; background: #f8fafc; height: 100%;">
-                <div style="display: flex; flex-direction: column; align-items: center; padding: 40px 20px;">
-                    <div style="background: white; width: 100%; max-width: 700px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 24px;">
-                        <div style="padding: 40px; text-align: center;">
-                            <div style="width: 64px; height: 64px; background: var(--primary); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px; color: white;">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div id="verifier-result-view" class="dashboard-view" style="display: none;">
+                <div class="verifier-container">
+                    <div class="result-card">
+                        <div id="vr-banner" class="result-banner result-banner-valid">
+                            <div class="result-icon-container">
+                                <svg id="vr-icon-success" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                <svg id="vr-icon-fail" style="display:none;" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                             </div>
-                            <h1 id="vr-status-title" style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 12px;">CREDENTIAL VERIFIED</h1>
-                            <p id="vr-status-desc" style="font-size: 0.875rem; color: #475569; max-width: 400px; margin: 0 auto 40px;">This document matches the blockchain ledger and was officially signed by ...</p>
-                            
-                            <div id="vr-details-card" style="border: 1px solid #e2e8f0; border-radius: 8px; text-align: left; margin-bottom: 24px;">
-                                <div style="padding: 20px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #e2e8f0;">
-                                    <div id="vr-initials" style="width: 48px; height: 48px; background: #e2e8f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #64748b;">--</div>
+                            <h1 id="vr-status-title" class="result-title">CREDENTIAL VERIFIED</h1>
+                            <p id="vr-status-desc" class="result-desc">This document matches the blockchain ledger and was officially signed by ...</p>
+                        </div>
+                        
+                        <div class="result-body">
+                            <div id="vr-details-card">
+                                <div class="result-student-header">
+                                    <div id="vr-initials" class="result-initials">--</div>
                                     <div>
-                                        <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px;">STUDENT NAME</div>
-                                        <div id="vr-student-name" style="font-size: 1.25rem; font-weight: 700;">...</div>
+                                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 4px;">STUDENT NAME</div>
+                                        <div id="vr-student-name" style="font-size: 1.5rem; font-weight: 800; color: var(--text-main);">...</div>
                                     </div>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e2e8f0;">
-                                    <div style="padding: 16px 20px; border-right: 1px solid #e2e8f0;">
-                                        <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px;">ROLL NO</div>
-                                        <div id="vr-roll" style="font-size: 0.875rem; font-weight: 600;">...</div>
+                                <div class="result-grid">
+                                    <div class="result-grid-item">
+                                        <div class="label">Roll No</div>
+                                        <div id="vr-roll" class="value">...</div>
                                     </div>
-                                    <div style="padding: 16px 20px;">
-                                        <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px;">DEGREE</div>
-                                        <div id="vr-degree" style="font-size: 0.875rem; font-weight: 600;">...</div>
+                                    <div class="result-grid-item">
+                                        <div class="label">Degree</div>
+                                        <div id="vr-degree" class="value">...</div>
                                     </div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                                    <div style="padding: 16px 20px; border-right: 1px solid #e2e8f0;">
-                                        <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px;">TRUE CGPA</div>
-                                        <div id="vr-cgpa" style="font-size: 0.875rem; font-weight: 600; color: var(--primary);">...</div>
+                                    <div class="result-grid-item">
+                                        <div class="label">True CGPA</div>
+                                        <div id="vr-cgpa" class="value" style="color: var(--primary);">...</div>
                                     </div>
-                                    <div style="padding: 16px 20px;">
-                                        <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 4px;">DATE OF ISSUE</div>
-                                        <div id="vr-date" style="font-size: 0.875rem; font-weight: 600;">...</div>
+                                    <div class="result-grid-item">
+                                        <div class="label">Date of Issue</div>
+                                        <div id="vr-date" class="value">...</div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div style="border: 1px solid #e2e8f0; border-radius: 8px; text-align: left; padding: 20px;">
-                                <div style="font-size: 0.65rem; font-weight: 700; color: #64748b; margin-bottom: 16px; display: flex; align-items: center; gap: 6px;">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> CRYPTOGRAPHIC EVIDENCE
+                            <div class="crypto-evidence">
+                                <div class="crypto-evidence-header">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Cryptographic Evidence
                                 </div>
-                                <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                                    <div style="width: 120px; font-size: 0.75rem; color: #64748b;">Block Hash</div>
-                                    <div style="flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 4px; font-family: monospace; font-size: 0.75rem;">0x8f2a...39b4c1</div>
+                                <div class="crypto-hash-row">
+                                    <div class="crypto-hash-label">Block Hash</div>
+                                    <div class="crypto-hash-value">0x8f2a...39b4c1</div>
                                 </div>
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 120px; font-size: 0.75rem; color: #64748b;">Transaction ID</div>
-                                    <div style="flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 4px; font-family: monospace; font-size: 0.75rem;">0x1a9c...77d2f8</div>
+                                <div class="crypto-hash-row">
+                                    <div class="crypto-hash-label">Transaction ID</div>
+                                    <div class="crypto-hash-value">0x1a9c...77d2f8</div>
                                 </div>
                             </div>
                         </div>
@@ -363,21 +371,23 @@
                         <div class="filters-right" id="registry-count-text">Showing 0-0 of 0 records</div>
                     </div>
                     
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Issue Date</th>
-                                <th>Hash Signature</th>
-                                <th>Status</th>
-                                <th style="text-align: right;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="registry-table-body">
-                            <!-- Populated dynamically via JS -->
-                        </tbody>
-                    </table>
+                    <div class="table-responsive" style="width: 100%; overflow-x: auto; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <table class="data-table" style="border: none;">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Issue Date</th>
+                                    <th>Hash Signature</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registry-table-body">
+                                <!-- Populated dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div class="pagination">
                         <button class="btn-page" onclick="changePage(-1)">Previous</button>
@@ -443,14 +453,14 @@
             const instName = localStorage.getItem('certify_inst_name');
             const instId = localStorage.getItem('certify_inst_id');
             
-            // If the user arrived via the "Verify a Credential" link, hide the Institute Portal completely
+            // If the user arrived via the "Verify a Credential" link, hide the sidebar completely
             const urlParams = new URLSearchParams(window.location.search);
             const isVerifier = urlParams.get('mode') === 'verifier';
             
             if (isVerifier) {
-                const instPortal = document.getElementById('nav-inst-portal');
-                if (instPortal) {
-                    instPortal.style.display = 'none';
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) {
+                    sidebar.style.display = 'none';
                 }
             } else if (!token) {
                 // Not a public verifier and no token -> Kick to login
@@ -583,7 +593,13 @@
             container.appendChild(fieldDiv);
         }
     </script>
-    <script src="js/dashboard.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <!-- JSON MODAL -->
@@ -602,5 +618,7 @@
             </div>
         </div>
     </div>
-</body>
+
+    </body>
+
 </html>

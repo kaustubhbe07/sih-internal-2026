@@ -310,13 +310,6 @@ function renderRegistryTable() {
             : `<button title="Revoke Credential" onclick="promptRevokeFromTable(event, '${cred.id}')" style="color: #dc2626;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>`;
 
         const tr = document.createElement('tr');
-        tr.style.cursor = 'pointer';
-        // Clicking row opens modal, except if they clicked a specific action button
-        tr.onclick = (e) => {
-            if (!e.target.closest('button')) {
-                openRegistryModal(cred.id);
-            }
-        };
 
         tr.innerHTML = `
             <td>${cred.roll_no}</td>
@@ -581,20 +574,29 @@ async function verifyCredential() {
         const title = document.getElementById('vr-status-title');
         const desc = document.getElementById('vr-status-desc');
         const card = document.getElementById('vr-details-card');
+        const banner = document.getElementById('vr-banner');
+        const iconSuccess = document.getElementById('vr-icon-success');
+        const iconFail = document.getElementById('vr-icon-fail');
 
         if (data.status === "VALID") {
             title.textContent = "CREDENTIAL VERIFIED";
-            title.style.color = "var(--primary)";
+            banner.className = "result-banner result-banner-valid";
+            iconSuccess.style.display = "block";
+            iconFail.style.display = "none";
             desc.textContent = "This document matches the blockchain ledger and was officially signed by " + (data.credential?.institution_name || "the institution") + ".";
         } else if (data.status === "REVOKED") {
             title.textContent = "CREDENTIAL REVOKED";
-            title.style.color = "#dc2626"; // red
+            banner.className = "result-banner result-banner-invalid";
+            iconSuccess.style.display = "none";
+            iconFail.style.display = "block";
             const revDate = data.revocation ? new Date(data.revocation.revoked_at).toLocaleDateString() : "an unknown date";
             const reason = data.revocation ? data.revocation.reason : "";
             desc.textContent = `This credential was revoked on ${revDate}. Reason: ${reason}`;
         } else {
             title.textContent = "INVALID CREDENTIAL";
-            title.style.color = "#dc2626";
+            banner.className = "result-banner result-banner-invalid";
+            iconSuccess.style.display = "none";
+            iconFail.style.display = "block";
             desc.textContent = "This document could not be cryptographically verified.";
         }
 
@@ -616,22 +618,64 @@ async function verifyCredential() {
     }
 }
 
-// Handle file upload for JSON credentials and other files (PDFs/Images)
+// Helper: Extract credential ID from a QR code URL or raw text
+function extractCredentialIdFromQR(decodedText) {
+    // QR payload format: {BASE_URL}/verify/{credential_id}
+    const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+    const match = decodedText.match(uuidRegex);
+    return match ? match[0] : decodedText.trim();
+}
+
+// Helper: Scan QR code from an image file using Html5Qrcode
+async function scanQRFromImageFile(file) {
+    if (typeof Html5Qrcode === 'undefined') throw new Error("QR library not loaded");
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    const decodedText = await html5QrCode.scanFile(file, true);
+    return extractCredentialIdFromQR(decodedText);
+}
+
+// Helper: Scan QR code from a PDF by rendering each page to canvas
+async function scanQRFromPDF(file) {
+    if (typeof pdfjsLib === 'undefined') throw new Error("PDF.js library not loaded");
+    if (typeof Html5Qrcode === 'undefined') throw new Error("QR library not loaded");
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const html5QrCode = new Html5Qrcode("qr-reader");
+
+    // Try each page (usually the QR is on page 1)
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2.0 }); // High resolution for better QR detection
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+
+        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+        // Convert canvas to blob and scan
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const imageFile = new File([blob], "page.png", { type: "image/png" });
+
+        try {
+            const decodedText = await html5QrCode.scanFile(imageFile, true);
+            return extractCredentialIdFromQR(decodedText);
+        } catch (err) {
+            // QR not found on this page, try next
+            console.log(`No QR found on page ${pageNum}, trying next...`);
+        }
+    }
+    throw new Error("No QR code found in any page of the PDF");
+}
+
+// Handle file upload for JSON credentials, PDFs (QR scan), and images (QR scan)
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (!file) return;
 
-    // Helper to extract UUID from filename if it's not a JSON
-    function extractIdFromFilename() {
-        const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
-        const match = file.name.match(uuidRegex);
-        if (match) {
-            document.getElementById('verifier-id-input').value = match[0];
-            verifyCredential();
-        } else {
-            alert("Could not extract Credential ID from the file. Please upload the raw .json credential or ensure the PDF filename contains the Credential ID.");
-        }
-    }
+    const inputField = document.getElementById('verifier-id-input');
 
     // If it's a JSON file, parse it normally
     if (file.name.toLowerCase().endsWith('.json') || file.type === "application/json") {
@@ -640,36 +684,44 @@ function handleFileUpload(event) {
             try {
                 const data = JSON.parse(e.target.result);
                 if (data && data.id) {
-                    document.getElementById('verifier-id-input').value = data.id;
+                    inputField.value = data.id;
                     verifyCredential();
                 } else {
-                    extractIdFromFilename(); // Fallback if JSON is weird
+                    alert("Invalid JSON file. The file must contain an 'id' field.");
                 }
             } catch (err) {
                 console.error("File parse error:", err);
-                extractIdFromFilename(); // Fallback to filename
+                alert("Could not parse the JSON file.");
             }
         };
         reader.readAsText(file);
+
     } else if (file.type.startsWith('image/')) {
-        // If it's an image, attempt to read the QR code directly from the file
-        if (typeof Html5Qrcode !== 'undefined') {
-            const html5QrCode = new Html5Qrcode("qr-reader");
-            html5QrCode.scanFile(file, true)
-                .then(decodedText => {
-                    document.getElementById('verifier-id-input').value = decodedText.trim();
-                    verifyCredential();
-                })
-                .catch(err => {
-                    console.log("No QR code found in image:", err);
-                    extractIdFromFilename(); // Fallback if no QR found
-                });
-        } else {
-            extractIdFromFilename();
-        }
+        // Scan QR code from uploaded image
+        scanQRFromImageFile(file)
+            .then(credId => {
+                inputField.value = credId;
+                verifyCredential();
+            })
+            .catch(err => {
+                console.error("QR scan from image failed:", err);
+                alert("No QR code found in the uploaded image. Please upload a certificate with a valid QR code.");
+            });
+
+    } else if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+        // Scan QR code from PDF by rendering pages
+        scanQRFromPDF(file)
+            .then(credId => {
+                inputField.value = credId;
+                verifyCredential();
+            })
+            .catch(err => {
+                console.error("QR scan from PDF failed:", err);
+                alert("No QR code found in the uploaded PDF. Please ensure the certificate contains a valid QR code.");
+            });
+
     } else {
-        // For PDFs or other files, simulate scanning by extracting the ID from the filename
-        extractIdFromFilename();
+        alert("Unsupported file type. Please upload a .json, .pdf, or image file.");
     }
     
     // Reset file input so the same file can be uploaded again if needed

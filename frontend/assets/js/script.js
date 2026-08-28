@@ -49,53 +49,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== STATS COUNTER ANIMATION =====
-    const statsSection = document.getElementById('stats');
-    const statNumbers = document.querySelectorAll('.stat-number');
-    let animated = false;
 
-    // Helper function to format numbers (e.g., 5000000 -> 5M)
-    const formatNumber = (num) => {
-        if (num >= 1000000) return (num / 1000000) + 'M';
-        if (num >= 1000) return (num / 1000) + 'K';
-        return num;
-    };
-
-    const animateCounters = () => {
-        statNumbers.forEach(stat => {
-            const target = +stat.getAttribute('data-target');
-            const duration = 2000; // 2 seconds
-            const increment = target / (duration / 16); // 60fps
-            
-            let current = 0;
-            const updateCounter = () => {
-                current += increment;
-                if (current < target) {
-                    // Only format when the animation reaches the end for visual impact, 
-                    // or just show raw numbers ticking up rapidly
-                    stat.innerText = Math.ceil(current);
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    stat.innerText = formatNumber(target);
-                }
-            };
-            updateCounter();
-        });
-    };
-
-    // Use Intersection Observer to trigger animation when stats section is in view
-    if (statsSection && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !animated) {
-                animateCounters();
-                animated = true;
-                observer.unobserve(statsSection);
-            }
-        }, { threshold: 0.5 });
-        
-        observer.observe(statsSection);
-    } else if (statsSection) {
-        // Fallback if IntersectionObserver is not supported
-        animateCounters();
-    }
 });

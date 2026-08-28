@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Certify</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="assets/css/main.css">
     <style>
         body {
             background-color: #f8fafc;
@@ -144,6 +144,22 @@
         .form-footer a:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 24px;
+                border-radius: 16px;
+                margin: 16px;
+                width: calc(100% - 32px);
+            }
+            .auth-logo {
+                font-size: 1.5rem;
+            }
+            .auth-logo svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -192,6 +208,8 @@
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
-</body>
+    <script src="assets/js/auth.js"></script>
+
+    </body>
+
 </html>
