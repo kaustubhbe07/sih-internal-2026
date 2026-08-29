@@ -1,7 +1,7 @@
 // Automatically detect if running locally vs deployed (Unified Deployment)
 const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-    ? 'http://127.0.0.1:8001' 
-    : window.location.origin;
+    ? 'http://127.0.0.1:8000' 
+    : 'https://truemark-backend-sih.onrender.com';
 
 // Ensure auth headers are added to all fetch requests
 function getAuthHeaders() {
