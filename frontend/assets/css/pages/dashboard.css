@@ -36,6 +36,27 @@ body {
     /* Prevent body scroll, let content scroll */
 }
 
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background: var(--bg-app);
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+.btn-back:hover {
+    background: var(--border-color);
+    color: var(--text-main);
+}
+
 /* ===== LAYOUT ===== */
 .layout {
     display: flex;
@@ -1550,12 +1571,18 @@ body {
     border: 1px solid #e2e8f0;
 }
 
+@media (max-width: 992px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .mobile-topbar {
         display: flex !important;
         align-items: center;
-        height: 60px;
-        padding: 0 20px;
+        height: 64px;
+        padding: 0 16px;
         background: var(--white);
         border-bottom: 1px solid var(--border-color);
         position: sticky;
@@ -1563,26 +1590,49 @@ body {
         z-index: 50;
     }
     
-    /* Make layout stack vertically on mobile if sidebar is present */
     .layout {
         flex-direction: column;
     }
     
+    /* Off-canvas sidebar */
     .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding: 16px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-right: 1px solid var(--border-color);
+        box-shadow: var(--shadow-lg);
     }
     
-    .sidebar-nav {
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 8px;
+    .sidebar.open {
+        transform: translateX(0);
     }
     
-    .nav-item {
-        white-space: nowrap;
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(2px);
+    }
+    
+    .sidebar-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .topbar {
+        display: none; /* Replaced by mobile topbar */
     }
     
     .content-wrapper, .verifier-pane-content {
@@ -1590,8 +1640,48 @@ body {
     }
     
     .issue-split {
-        flex-direction: column-reverse;
+        grid-template-columns: 1fr;
         gap: 24px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .revoke-card-details {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .revoke-action-row {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+    
+    .revoke-action-row button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters-left {
+        flex-wrap: wrap;
+    }
+    
+    .cert-preview {
+        min-height: auto;
+        padding: 16px;
+    }
+    
+    .cert-card {
+        transform: scale(0.9);
+        transform-origin: top center;
+        margin: 0 auto;
     }
 }
 
@@ -1602,5 +1692,10 @@ body {
     
     .verifier-container {
         padding: 24px 12px;
+    }
+    
+    .cert-card {
+        transform: scale(0.75);
+        transform-origin: top center;
     }
 }

@@ -4,6 +4,7 @@ Credential Verification — FastAPI application entry point.
 Registers all routers and exposes the ASGI app object that uvicorn serves.
 """
 
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,9 +25,12 @@ app = FastAPI(
 )
 
 # ── CORS Middleware ──────────────────────────────────────────────────────
+frontend_url = os.getenv("FRONTEND_URL", "*")
+origins = [origin.strip() for origin in frontend_url.split(",")] if frontend_url != "*" else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

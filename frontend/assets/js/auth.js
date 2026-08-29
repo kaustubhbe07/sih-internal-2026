@@ -1,4 +1,7 @@
-const API_BASE_URL = 'http://127.0.0.1:8001';
+// Automatically detect if running locally vs deployed (Unified Deployment)
+const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
+    ? 'http://127.0.0.1:8001' 
+    : window.location.origin;
 
 // --- TOAST NOTIFICATIONS ---
 function showToast(message, type = 'success') {

@@ -1,4 +1,7 @@
-const API_BASE_URL = "http://127.0.0.1:8001";
+// Automatically detect if running locally vs deployed (Unified Deployment)
+const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
+    ? 'http://127.0.0.1:8001' 
+    : window.location.origin;
 
 // Ensure auth headers are added to all fetch requests
 function getAuthHeaders() {
@@ -555,7 +558,7 @@ async function verifyCredential() {
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:8001/verify/${credId}`);
+        const response = await fetch(`${API_BASE_URL}/verify/${credId}`);
         if (!response.ok) {
             if (response.status === 404) {
                 alert("Credential not found.");

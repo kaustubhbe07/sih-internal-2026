@@ -194,7 +194,7 @@
     top: 72px;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: calc(100vh - 72px); /* Fixed height because .navbar is containing block */
     background-color: #ffffff;
     padding: 32px 24px;
     flex-direction: column;
@@ -347,8 +347,33 @@
     }
 }
 
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.25rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    .nav-container {
+        height: 64px;
+        padding: 0 16px;
+    }
+    .mobile-menu {
+        top: 64px;
+        height: calc(100vh - 64px);
+        padding: 24px 16px;
+    }
+    .footer {
+        padding: 48px 0 0;
+    }
+}
+
 @media (max-width: 576px) {
+    .section-title {
+        font-size: 1.875rem;
+    }
     .footer-grid {
         grid-template-columns: 1fr;
+        gap: 32px;
     }
 }

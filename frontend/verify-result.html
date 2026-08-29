@@ -39,6 +39,10 @@
         .cr-label { width: 120px; font-size: 0.75rem; color: #64748b; }
         .cr-val { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; }
         .cr-copy { cursor: pointer; color: #64748b; }
+        .btn-back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 600; color: #475569; text-decoration: none; padding: 6px 12px; border-radius: 6px; background: #f8fafc; transition: all 0.2s ease; border: 1px solid #e2e8f0; }
+        .btn-back:hover { background: #e2e8f0; color: #0f172a; }
+        .btn-primary { display: inline-flex; justify-content: center; align-items: center; gap: 8px; width: 100%; background: #0f172a; color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; text-decoration: none; margin-top: 16px; transition: background 0.2s; }
+        .btn-primary:hover { background: #1e293b; }
         
         .actions { display: flex; justify-content: center; gap: 16px; }
         .btn-dark { background: #0f172a; color: white; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; border: none; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -48,41 +52,47 @@
 <body>
     
     <div class="result-container">
-        <div class="header">Certify</div>
+        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>TrueMark</span>
+            <a href="verify.html" class="btn-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Scan Another
+            </a>
+        </div>
         <div class="content">
             <div class="icon-success">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             
-            <h1 class="status-title">CREDENTIAL VERIFIED</h1>
-            <p class="status-desc">This document matches the blockchain ledger and was officially signed by NIT Rourkela.</p>
+            <h1 class="status-title" id="vr-status-title">Loading...</h1>
+            <p class="status-desc" id="vr-status-desc">Fetching cryptographic proof from the ledger...</p>
             
             <div class="details-card">
                 <div class="dc-header">
                     <div class="dc-avatar">AS</div>
                     <div>
                         <div class="dc-name-label">STUDENT NAME</div>
-                        <div class="dc-name-val">Aarav Sharma</div>
+                        <div class="dc-name-val" id="vr-student-name">-</div>
                     </div>
                 </div>
                 <div class="dc-grid">
                     <div class="dc-cell">
                         <div class="dc-label">ROLL NO</div>
-                        <div class="dc-val">NITR-2023-4567</div>
+                        <div class="dc-val" id="vr-roll-no">-</div>
                     </div>
                     <div class="dc-cell">
                         <div class="dc-label">DEGREE</div>
-                        <div class="dc-val">B.Tech in Computer Science</div>
+                        <div class="dc-val" id="vr-degree">-</div>
                     </div>
                 </div>
                 <div class="dc-grid">
                     <div class="dc-cell">
                         <div class="dc-label">TRUE CGPA</div>
-                        <div class="dc-val text-green">9.25</div>
+                        <div class="dc-val text-green" id="vr-cgpa">-</div>
                     </div>
                     <div class="dc-cell">
                         <div class="dc-label">DATE OF ISSUE</div>
-                        <div class="dc-val">May 15, 2024</div>
+                        <div class="dc-val" id="vr-issue-date">-</div>
                     </div>
                 </div>
             </div>
@@ -94,19 +104,22 @@
                 </div>
                 <div class="crypto-row">
                     <div class="cr-label">Block Hash</div>
-                    <div class="cr-val">
-                        0x8f2a...39b4c1
-                        <svg class="cr-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <div class="cr-val" id="vr-block-hash" style="word-break: break-all;">
+                        -
                     </div>
                 </div>
                 <div class="crypto-row">
                     <div class="cr-label">Transaction ID</div>
-                    <div class="cr-val">
-                        0x1a9c...77d2f8
-                        <svg class="cr-copy" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                    <div class="cr-val" id="vr-cred-id" style="word-break: break-all;">
+                        -
                     </div>
                 </div>
             </div>
+            
+            <a href="verify.html" class="btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5c0-1.1.9-2 2-2h2"/><path d="M17 3h2c1.1 0 2 .9 2 2v2"/><path d="M21 17v2c0 1.1-.9 2-2 2h-2"/><path d="M7 21H5c-1.1 0-2-.9-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
+                Verify Another Credential
+            </a>
         </div>
     </div>
     
@@ -122,6 +135,71 @@
     </div>
 
 
+    <script>
+        const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
+            ? 'http://127.0.0.1:8001' 
+            : window.location.origin;
+
+        async function fetchVerification() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            if (!id) {
+                document.getElementById('vr-status-title').textContent = "NO ID PROVIDED";
+                document.getElementById('vr-status-desc').textContent = "Please scan a valid QR code or enter a credential ID.";
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/verify/${id}`);
+                if (!response.ok) throw new Error("Not Found");
+                
+                const data = await response.json();
+                
+                document.getElementById('vr-student-name').textContent = data.credential?.student_name || '-';
+                document.getElementById('vr-roll-no').textContent = data.credential?.roll_no || '-';
+                document.getElementById('vr-degree').textContent = data.credential?.degree || '-';
+                document.getElementById('vr-cgpa').textContent = data.credential?.cgpa || '-';
+                document.getElementById('vr-issue-date').textContent = data.credential?.issue_date || '-';
+                document.getElementById('vr-block-hash').textContent = data.hash_valid ? 'Valid (SHA-256 Verified)' : 'Invalid';
+                document.getElementById('vr-cred-id').textContent = id;
+                
+                const title = document.getElementById('vr-status-title');
+                const desc = document.getElementById('vr-status-desc');
+                const icon = document.querySelector('.icon-success');
+                
+                if (data.status === 'VALID') {
+                    title.textContent = "CREDENTIAL VERIFIED";
+                    title.style.color = "#16a34a";
+                    icon.style.background = "#16a34a";
+                    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+                    desc.textContent = `This document matches the blockchain ledger and was officially signed by ${data.credential?.institution_name}.`;
+                } else if (data.status === 'REVOKED') {
+                    title.textContent = "CREDENTIAL REVOKED";
+                    title.style.color = "#dc2626";
+                    icon.style.background = "#dc2626";
+                    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+                    desc.textContent = `This credential was revoked on ${new Date(data.revocation?.revoked_at).toLocaleDateString()}. Reason: ${data.revocation?.reason}`;
+                } else {
+                    title.textContent = "TAMPERED / INVALID";
+                    title.style.color = "#dc2626";
+                    icon.style.background = "#dc2626";
+                    icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+                    desc.textContent = "Cryptographic verification failed. This document is not authentic.";
+                }
+            } catch (err) {
+                const title = document.getElementById('vr-status-title');
+                title.textContent = "NOT FOUND";
+                title.style.color = "#dc2626";
+                document.getElementById('vr-status-desc').textContent = "The credential ID does not exist in the registry.";
+                const icon = document.querySelector('.icon-success');
+                icon.style.background = "#dc2626";
+                icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+            }
+        }
+        
+        window.onload = fetchVerification;
+    </script>
     </body>
 
 </html>
