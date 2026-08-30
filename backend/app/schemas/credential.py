@@ -120,11 +120,3 @@ class VerifyResponse(BaseModel):
     revocation: RevocationInfo | None = None
 
 
-class OCRVerifyResponse(BaseModel):
-    status: str  # "VALID", "TAMPERED", "REVOKED", "SUSPICIOUS"
-    extracted_fields: dict
-    match_confidence: float | None = None
-    matched_credential: CredentialSummary | None = None
-    hash_valid: bool | None = None
-    chain_intact: bool | None = None
-    signature_valid: bool | None = None

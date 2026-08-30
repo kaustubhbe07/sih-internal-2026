@@ -16,7 +16,7 @@ router = APIRouter(tags=["auth"])
 def register(req: RegisterRequest, db: Session = Depends(get_db)):
     """
     Register a new institution. 
-    This creates the institution record and generates its RSA keypair.
+    This creates the institution record and generates its Ed25519 keypair.
     """
     return auth_service.register_institution(db, req)
 

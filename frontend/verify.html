@@ -175,9 +175,9 @@
                     <div class="upload-dropzone" onclick="document.getElementById('verify-file-upload').click()">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" style="margin-bottom: 16px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 12 15 15"/></svg>
                         <h4 style="font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: #1e293b;">Upload Certificate File</h4>
-                        <p style="font-size: 0.875rem; color: #475569; margin-bottom: 24px;">Supports .json files for public verification</p>
+                        <p style="font-size: 0.875rem; color: #475569; margin-bottom: 24px;">Supports .json, .pdf, or image files</p>
                         <button class="verifier-btn" style="background: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; pointer-events: none;">Browse Device</button>
-                        <input type="file" id="verify-file-upload" accept=".json, application/json" style="display: none;" onchange="handleFileUpload(event)">
+                        <input type="file" id="verify-file-upload" accept=".json, application/json, .pdf, application/pdf, .jpg, .jpeg, image/jpeg, .png, image/png" style="display: none;" onchange="handleFileUpload(event)">
                     </div>
                 </div>
 
@@ -187,8 +187,17 @@
                 </div>
             </div>
         </div>
+
+        <!-- Hidden helper element for file-based QR scanning (always visible in DOM flow) -->
+        <div id="qr-file-scanner" style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute; pointer-events: none;"></div>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         // Tab Switching Logic
@@ -216,7 +225,7 @@
             }
         }
 
-        // QR Scanner Logic
+        // QR Scanner Logic (camera-based, uses #qr-reader)
         let html5QrcodeScanner = null;
         function initQRScanner() {
             if (html5QrcodeScanner) return;
@@ -264,30 +273,118 @@
             }
         }
 
+        // Helper: Extract ID using regex
+        function extractCredentialIdFromQR(decodedText) {
+            let id = decodedText.trim();
+            const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+            const match = id.match(uuidRegex);
+            if (match) return match[0];
+            return id;
+        }
+
+        // Helper: Scan QR from Image (uses dedicated #qr-file-scanner element)
+        async function scanQRFromImageFile(file) {
+            if (typeof Html5Qrcode === 'undefined') throw new Error("QR library not loaded");
+            const html5QrCode = new Html5Qrcode("qr-file-scanner");
+            try {
+                const decodedText = await html5QrCode.scanFile(file, true);
+                return extractCredentialIdFromQR(decodedText);
+            } finally {
+                try { html5QrCode.clear(); } catch(_) {}
+            }
+        }
+
+        // Helper: Scan QR from PDF (uses dedicated #qr-file-scanner element)
+        async function scanQRFromPDF(file) {
+            if (typeof pdfjsLib === 'undefined') throw new Error("PDF.js library not loaded");
+            if (typeof Html5Qrcode === 'undefined') throw new Error("QR library not loaded");
+
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const html5QrCode = new Html5Qrcode("qr-file-scanner");
+
+            try {
+                for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    const page = await pdf.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 2.0 });
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                    const imageFile = new File([blob], "page.png", { type: "image/png" });
+
+                    try {
+                        const decodedText = await html5QrCode.scanFile(imageFile, true);
+                        return extractCredentialIdFromQR(decodedText);
+                    } catch (err) {
+                        console.log(`No QR found on page ${pageNum}...`);
+                    }
+                }
+                throw new Error("No QR code found in any page of the PDF");
+            } finally {
+                try { html5QrCode.clear(); } catch(_) {}
+            }
+        }
+
         // File Upload Logic
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
             
+            const inputField = document.getElementById('verifier-id-input');
+            
+            // JSON Logic
             if (file.type === 'application/json' || file.name.endsWith('.json')) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     try {
                         const json = JSON.parse(e.target.result);
-                        if (json.credential_id) {
-                            document.getElementById('verifier-id-input').value = json.credential_id;
+                        const id = json.id || json.credential_id;
+                        if (id) {
+                            inputField.value = id;
                             goToVerification();
                         } else {
                             alert("Invalid JSON: Missing credential_id field.");
                         }
-                    } catch (err) {
-                        alert("Invalid JSON file.");
+                    } catch(err) {
+                        alert("Error parsing file");
                     }
                 };
                 reader.readAsText(file);
-            } else {
-                alert("For this public portal demo, please upload a .json credential file.");
+            } 
+            // Image Logic
+            else if (file.type.startsWith('image/')) {
+                scanQRFromImageFile(file)
+                    .then(credId => {
+                        inputField.value = credId;
+                        goToVerification();
+                    })
+                    .catch(err => {
+                        console.error("QR scan from image failed:", err);
+                        alert("No QR code found in the uploaded image.");
+                    });
+            } 
+            // PDF Logic
+            else if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+                scanQRFromPDF(file)
+                    .then(credId => {
+                        inputField.value = credId;
+                        goToVerification();
+                    })
+                    .catch(err => {
+                        console.error("QR scan from PDF failed:", err);
+                        alert("No QR code found in the uploaded PDF.");
+                    });
+            } 
+            else {
+                alert("Please upload a .json, .pdf, or image file");
             }
+            
             event.target.value = '';
         }
     </script>

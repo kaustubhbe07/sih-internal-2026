@@ -23,7 +23,7 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
     Core verification logic — performs four independent checks:
       1. Hash validity — recompute record_hash from stored fields
       2. Chain integrity — walk from genesis to this credential
-      3. Signature — verify RSA signature with institution's public key
+      3. Signature — verify Ed25519 signature with institution's public key
       4. Revocation — check if a revocation event exists
     """
     # ─── Fetch the credential ────────────────────────────────────────
@@ -74,7 +74,7 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
 
         expected_prev_hash = recomputed
 
-    # ─── CHECK 3: RSA signature ──────────────────────────────────────
+    # ─── CHECK 3: Ed25519 signature ──────────────────────────────────
     signature_valid = False
     if institution:
         signature_valid = verify_signature(

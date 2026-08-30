@@ -105,7 +105,7 @@ def verify_jwt(token: str) -> str:
 # ── Core Auth Services ───────────────────────────────────────────────────
 
 def register_institution(db: Session, req: RegisterRequest) -> RegisterResponse:
-    """Register a new institution, generating its RSA keypair."""
+    """Register a new institution, generating its Ed25519 keypair."""
     inst_repo = InstituteRepository(db)
     
     # 1. Check if email exists
@@ -119,7 +119,7 @@ def register_institution(db: Session, req: RegisterRequest) -> RegisterResponse:
     # 2. Hash password
     hashed_pwd = hash_password(req.password)
     
-    # 3. Generate Institution ID and RSA Keypair
+    # 3. Generate Institution ID and Ed25519 Keypair
     new_id = uuid.uuid4()
     public_key_pem, private_key_path = generate_keypair(str(new_id))
     

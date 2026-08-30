@@ -485,22 +485,38 @@
 .how-it-works {
     padding: var(--section-padding);
     background: var(--gray-50);
+    position: relative;
+    overflow: hidden;
 }
 
 .steps-grid {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 0;
-    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: nowrap;
+    margin-top: 40px;
 }
 
 .step-card {
     flex: 1;
-    min-width: 200px;
-    max-width: 260px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
     text-align: center;
-    padding: 24px 16px;
+    padding: 36px 24px;
+    transition: var(--transition);
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-lg), 0 12px 30px rgba(22, 163, 74, 0.08);
 }
 
 .step-number {
@@ -515,19 +531,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
+    margin: 0 auto 20px;
+    transition: var(--transition);
+}
+
+.step-card:hover .step-number {
+    transform: scale(1.1);
+    background: var(--primary);
+    color: var(--white);
 }
 
 .step-icon {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.step-card:hover .step-icon {
+    transform: scale(1.1) rotate(4deg);
 }
 
 .step-card h3 {
     font-family: var(--font-heading);
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--gray-900);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .step-card p {
@@ -539,8 +568,51 @@
 .step-connector {
     display: flex;
     align-items: center;
-    padding-top: 60px;
-    opacity: 0.4;
+    justify-content: center;
+    align-self: center;
+    opacity: 0.6;
+    flex-shrink: 0;
+    transition: var(--transition);
+}
+
+.step-connector svg path {
+    stroke-dasharray: 8;
+    animation: flowLine 2s linear infinite;
+}
+
+@keyframes flowLine {
+    0% {
+        stroke-dashoffset: 16;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Adjust steps layout for smaller screens */
+@media (max-width: 1024px) {
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 30px;
+    }
+    
+    .step-connector {
+        display: none;
+    }
+    
+    .step-card {
+        max-width: none;
+        padding: 28px 20px;
+    }
+}
+
+@media (max-width: 640px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 
 @media (max-width: 992px) {

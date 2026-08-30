@@ -25,8 +25,10 @@ app = FastAPI(
 )
 
 # ── CORS Middleware ──────────────────────────────────────────────────────
-frontend_url = os.getenv("FRONTEND_URL", "*")
-origins = [origin.strip() for origin in frontend_url.split(",")] if frontend_url != "*" else ["*"]
+frontend_url = os.getenv("FRONTEND_URL", "https://truemark-one.vercel.app")
+
+# Split by comma to support multiple URLs in the future (e.g., your Vercel URL + localhost)
+origins = [origin.strip() for origin in frontend_url.split(",")]
 
 app.add_middleware(
     CORSMiddleware,

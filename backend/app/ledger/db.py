@@ -25,7 +25,7 @@ engine = create_engine(
     connect_args=_connect_args,
     pool_pre_ping=True,       # detect stale/dead connections before using them
     pool_timeout=10,          # max 10s wait for a connection from the pool
-    pool_recycle=300,         # recycle connections every 5 min (Neon closes idle ones)
+    pool_recycle=300,         # recycle connections every 5 min (Supabase pooler closes idle ones)
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 

@@ -139,11 +139,11 @@
     </div>
     
     <div class="actions">
-        <button class="btn-dark">
+        <button class="btn-dark" onclick="downloadOfficialPDF()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
             Download Official PDF
         </button>
-        <button class="btn-light">
+        <button class="btn-light" onclick="window.print()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
             Print Verification Report
         </button>
@@ -151,9 +151,17 @@
 
 
     <script>
-        const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-            ? 'http://127.0.0.1:8000' 
+        const isLocal = window.location.hostname === '127.0.0.1' || 
+                        window.location.hostname === 'localhost' ||
+                        window.location.hostname.startsWith('192.168.') ||
+                        window.location.hostname.startsWith('10.') ||
+                        window.location.protocol === 'file:';
+
+        const API_BASE_URL = isLocal 
+            ? (window.location.hostname ? `http://${window.location.hostname}:8000` : 'http://127.0.0.1:8000')
             : 'https://truemark-backend-sih.onrender.com';
+
+        let isCredentialValid = false;
 
         async function fetchVerification() {
             const params = new URLSearchParams(window.location.search);
@@ -184,6 +192,7 @@
                 const icon = document.querySelector('.icon-success');
                 
                 if (data.status === 'VALID') {
+                    isCredentialValid = true;
                     title.textContent = "CREDENTIAL VERIFIED";
                     title.style.color = "#16a34a";
                     icon.style.background = "#16a34a";
@@ -210,6 +219,20 @@
                 const icon = document.querySelector('.icon-success');
                 icon.style.background = "#dc2626";
                 icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+            }
+        }
+        
+        function downloadOfficialPDF() {
+            if (!isCredentialValid) {
+                alert("Cannot download: This credential could not be verified as valid and active.");
+                return;
+            }
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                window.open(`${API_BASE_URL}/credentials/${id}/certificate`, '_blank');
+            } else {
+                alert("No credential ID available to download.");
             }
         }
         

@@ -686,8 +686,9 @@ function handleFileUpload(event) {
         reader.onload = function(e) {
             try {
                 const data = JSON.parse(e.target.result);
-                if (data && data.id) {
-                    inputField.value = data.id;
+                const id = data.id || data.credential_id;
+                if (id) {
+                    inputField.value = id;
                     verifyCredential();
                 } else {
                     alert("Invalid JSON file. The file must contain an 'id' field.");
