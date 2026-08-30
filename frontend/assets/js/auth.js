@@ -1,6 +1,11 @@
 // Automatically detect if running locally vs deployed (Unified Deployment)
-const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-    ? 'http://127.0.0.1:8000' 
+const isLocal = window.location.hostname === '127.0.0.1' || 
+                window.location.hostname === 'localhost' ||
+                window.location.hostname.startsWith('192.168.') ||
+                window.location.hostname.startsWith('10.');
+
+const API_BASE_URL = isLocal 
+    ? `http://${window.location.hostname}:8000` 
     : 'https://truemark-backend-sih.onrender.com';
 
 // --- TOAST NOTIFICATIONS ---

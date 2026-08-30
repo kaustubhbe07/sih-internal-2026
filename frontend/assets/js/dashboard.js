@@ -741,10 +741,19 @@ function initQRScanner() {
         // Stop scanning after a successful read
         stopQRScanner();
 
+        let id = decodedText.trim();
+        
+        // Robust extraction using UUID regex
+        const uuidRegex = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+        const match = id.match(uuidRegex);
+        if (match) {
+            id = match[0];
+        }
+
         // Inject the scanned text (which is the Credential ID) into the input
         const inputField = document.getElementById('verifier-id-input');
         if (inputField) {
-            inputField.value = decodedText.trim();
+            inputField.value = id;
             // Trigger the verification automatically
             verifyCredential();
         }
@@ -754,11 +763,24 @@ function initQRScanner() {
         // Handle scan failure silently to keep scanning frames
     }
 
+    // Dynamic qrbox size for mobile screens
+    const qrboxFunction = function(viewfinderWidth, viewfinderHeight) {
+        let minEdgePercentage = 0.7; // 70% of the screen
+        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+        let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+        return {
+            width: qrboxSize,
+            height: qrboxSize
+        };
+    }
+
     // Initialize the scanner UI in the #qr-reader div
-    html5QrcodeScanner = new Html5QrcodeScanner(
-      "qr-reader",
-      { fps: 10, qrbox: {width: 250, height: 250} },
-      /* verbose= */ false);
+    html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { 
+        fps: 10, 
+        qrbox: qrboxFunction,
+        aspectRatio: 1.0,
+        videoConstraints: { facingMode: "environment" }
+    }, false);
       
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 }

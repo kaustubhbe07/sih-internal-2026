@@ -145,12 +145,43 @@
             text-decoration: underline;
         }
 
+        .back-btn {
+            display: flex;
+            position: absolute;
+            top: 32px;
+            left: 32px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            z-index: 50;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .back-btn:active {
+            transform: translateY(0) scale(0.95);
+            background: #f1f5f9;
+        }
+
         @media (max-width: 480px) {
             .auth-container {
                 padding: 24px;
                 border-radius: 16px;
                 margin: 16px;
                 width: calc(100% - 32px);
+                margin-top: 64px; /* Space for back button */
             }
             .auth-logo {
                 font-size: 1.5rem;
@@ -159,10 +190,21 @@
                 width: 32px;
                 height: 32px;
             }
+            .back-btn {
+                top: 16px;
+                left: 16px;
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn" aria-label="Go back to Home">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+
     <!-- Toast Notifications Container -->
     <div id="toast-container" class="toast-container"></div>
 

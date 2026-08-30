@@ -47,6 +47,21 @@
         .actions { display: flex; justify-content: center; gap: 16px; }
         .btn-dark { background: #0f172a; color: white; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; border: none; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .btn-light { background: #eff6ff; color: #1e3a8a; padding: 12px 24px; border-radius: 6px; font-weight: 600; text-decoration: none; border: 1px solid #bfdbfe; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        
+        @media (max-width: 480px) {
+            .btn-back span { display: none; }
+            .btn-back { padding: 10px; border-radius: 50%; }
+            .btn-back svg { margin: 0; }
+            .dc-grid { grid-template-columns: 1fr; }
+            .dc-cell { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .dc-cell:last-child { border-bottom: none; }
+            .actions { flex-direction: column; }
+            .actions button { width: 100%; justify-content: center; }
+            .crypto-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .cr-val { width: 100%; box-sizing: border-box; }
+            .header { padding: 12px 16px; }
+            .content { padding: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -56,7 +71,7 @@
             <span>TrueMark</span>
             <a href="verify.html" class="btn-back">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                Scan Another
+                <span>Scan Another</span>
             </a>
         </div>
         <div class="content">

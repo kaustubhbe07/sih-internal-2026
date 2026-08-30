@@ -540,70 +540,90 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 340px;
+    width: 100%;
+    max-width: 360px;
     background: var(--white);
-    padding: 40px 32px;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    padding: 36px 28px;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(22, 163, 74, 0.15), 0 0 0 1px rgba(22, 163, 74, 0.05);
     text-align: center;
     z-index: 2;
+    overflow: hidden;
+}
+
+.main-cert::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
 }
 
 .cert-inst-name {
+    font-family: var(--font-heading);
     font-size: 0.75rem;
-    font-weight: 700;
-    color: #334155;
+    font-weight: 800;
+    color: var(--primary-dark);
     margin-bottom: 24px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .cert-title-text {
     font-family: 'Times New Roman', serif;
-    font-size: 1.75rem;
-    color: #0f172a;
+    font-size: 1.875rem;
+    color: var(--gray-900);
     margin-bottom: 8px;
+    font-weight: normal;
 }
 
 .cert-small-text {
     font-size: 0.75rem;
     color: var(--gray-400);
     margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .cert-student-name {
     font-family: 'Times New Roman', serif;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-style: italic;
-    color: #0f172a;
-    margin-bottom: 12px;
-    border-bottom: 1px solid var(--gray-200);
+    color: var(--primary-darker);
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--primary-100);
     padding-bottom: 4px;
     display: inline-block; white-space: nowrap;
 }
 
 .cert-desc-text {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     color: var(--gray-500);
-    line-height: 1.5;
-    margin-bottom: 32px;
+    line-height: 1.6;
+    margin-bottom: 36px;
 }
 
 .cert-bottom {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    padding-top: 16px;
+    border-top: 1px dashed var(--gray-200);
 }
 
 .cert-verified-badge {
     display: flex;
     align-items: center;
-    gap: 4px;
-    color: var(--primary);
+    gap: 6px;
+    color: var(--primary-700);
     font-size: 0.75rem;
     font-weight: 700;
     background: var(--primary-50);
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 99px;
+    border: 1px solid var(--primary-200);
 }
 
 .cert-qr-icon {
