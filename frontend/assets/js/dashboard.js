@@ -78,11 +78,12 @@ async function fetchOverview() {
             const badgeText = cred.revoked ? 'REVOKED' : 'SUCCESS';
             
             const feedTitle = cred.revoked
-                ? `Revoked ${cred.degree} of ${cred.student_name}`
+                ? `Revoked ${cred.degree} for ${cred.student_name}`
                 : `Issued ${cred.degree} to ${cred.student_name}`;
             
             // Format time ago
-            const timeDiff = Math.floor((new Date() - new Date(cred.created_at)) / 1000);
+            const createdAt = cred.created_at.endsWith('Z') ? cred.created_at : cred.created_at + 'Z';
+            const timeDiff = Math.floor((new Date() - new Date(createdAt)) / 1000);
             let timeAgo = "Just now";
             if (timeDiff > 3600) {
                 timeAgo = Math.floor(timeDiff / 3600) + " hrs ago";
