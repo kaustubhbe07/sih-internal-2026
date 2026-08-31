@@ -65,12 +65,16 @@ class CredentialRepository:
         return list(self._session.scalars(stmt).all())
 
     def exists_for_student(self, institute_id: str, roll_no: str, degree: str) -> bool:
+        """Check if an active (non-revoked) credential exists for this student + degree."""
         u_id = _ensure_uuid(institute_id)
         if not u_id: return False
         stmt = select(CredentialRecord).where(
             CredentialRecord.institution_id == u_id,
             CredentialRecord.roll_no == roll_no,
-            CredentialRecord.degree == degree
+            CredentialRecord.degree == degree,
+            ~CredentialRecord.id.in_(
+                select(RevocationEvent.credential_id)
+            ),
         ).limit(1)
         return self._session.scalars(stmt).first() is not None
 
