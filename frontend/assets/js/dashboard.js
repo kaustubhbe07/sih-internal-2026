@@ -363,13 +363,19 @@ function openRegistryModal(credId) {
     const cred = window.allCredentials.find(c => c.id === credId);
     if (!cred) return;
 
+    let dashCgpaVal = null;
+    if (cred.custom_fields) {
+        const key = Object.keys(cred.custom_fields).find(k => k.toUpperCase() === 'CGPA');
+        if (key) dashCgpaVal = cred.custom_fields[key];
+    }
+
     // Construct the payload as it would appear on chain
     const payloadObj = {
         institution_id: cred.institution_id,
         student_name: cred.student_name,
         roll_no: cred.roll_no,
         degree: cred.degree,
-        cgpa: cred.custom_fields ? cred.custom_fields["CGPA"] : null,
+        cgpa: dashCgpaVal,
         issue_date: cred.issue_date,
         custom_fields: cred.custom_fields,
         prev_hash: cred.prev_hash
@@ -600,11 +606,17 @@ async function verifyCredential() {
 
         if (data.credential) {
             card.style.display = 'block';
+            let vrCgpaVal = 'N/A';
+            if (data.credential.custom_fields) {
+                const key = Object.keys(data.credential.custom_fields).find(k => k.toUpperCase() === 'CGPA');
+                if (key) vrCgpaVal = data.credential.custom_fields[key];
+            }
+
             document.getElementById('vr-student-name').textContent = data.credential.student_name;
             document.getElementById('vr-initials').textContent = data.credential.student_name.substring(0, 2).toUpperCase();
             document.getElementById('vr-roll').textContent = data.credential.roll_no;
             document.getElementById('vr-degree').textContent = data.credential.degree;
-            document.getElementById('vr-cgpa').textContent = (data.credential.custom_fields && data.credential.custom_fields['CGPA']) ? data.credential.custom_fields['CGPA'] : 'N/A';
+            document.getElementById('vr-cgpa').textContent = vrCgpaVal;
             document.getElementById('vr-date').textContent = new Date(data.credential.issue_date).toLocaleDateString();
         } else {
             card.style.display = 'none';

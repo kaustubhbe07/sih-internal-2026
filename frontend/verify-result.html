@@ -102,7 +102,7 @@
                 </div>
                 <div class="dc-grid">
                     <div class="dc-cell">
-                        <div class="dc-label">TRUE CGPA</div>
+                        <div class="dc-label">CGPA</div>
                         <div class="dc-val text-green" id="vr-cgpa">-</div>
                     </div>
                     <div class="dc-cell">
@@ -183,7 +183,12 @@
                 document.getElementById('vr-student-name').textContent = data.credential?.student_name || '-';
                 document.getElementById('vr-roll-no').textContent = data.credential?.roll_no || '-';
                 document.getElementById('vr-degree').textContent = data.credential?.degree || '-';
-                document.getElementById('vr-cgpa').textContent = (data.credential?.custom_fields && data.credential.custom_fields['CGPA']) ? data.credential.custom_fields['CGPA'] : '-';
+                let cgpaVal = '-';
+                if (data.credential?.custom_fields) {
+                    const cgpaKey = Object.keys(data.credential.custom_fields).find(k => k.toUpperCase() === 'CGPA');
+                    if (cgpaKey) cgpaVal = data.credential.custom_fields[cgpaKey];
+                }
+                document.getElementById('vr-cgpa').textContent = cgpaVal;
                 document.getElementById('vr-issue-date').textContent = data.credential?.issue_date || '-';
                 
                 // Inject any other custom fields
