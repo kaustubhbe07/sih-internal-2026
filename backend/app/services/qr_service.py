@@ -65,9 +65,9 @@ def generate_certificate_pdf(credential, institution_name: str) -> bytes:
     c.setFont("Helvetica-Bold", 20)
     c.drawCentredString(width / 2.0, height - 340, credential.degree)
 
-    if credential.cgpa:
-        c.setFont("Helvetica", 16)
-        c.drawCentredString(width / 2.0, height - 380, f"with a CGPA of {credential.cgpa}")
+    # if credential.cgpa:
+    #     c.setFont("Helvetica", 16)
+    #     c.drawCentredString(width / 2.0, height - 380, f"with a CGPA of {credential.cgpa}")
 
     # Draw custom fields if any
     y_pos = height - 420

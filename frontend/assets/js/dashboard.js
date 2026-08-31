@@ -606,17 +606,29 @@ async function verifyCredential() {
 
         if (data.credential) {
             card.style.display = 'block';
-            let vrCgpaVal = 'N/A';
-            if (data.credential.custom_fields) {
-                const key = Object.keys(data.credential.custom_fields).find(k => k.toUpperCase() === 'CGPA');
-                if (key) vrCgpaVal = data.credential.custom_fields[key];
-            }
-
             document.getElementById('vr-student-name').textContent = data.credential.student_name;
             document.getElementById('vr-initials').textContent = data.credential.student_name.substring(0, 2).toUpperCase();
             document.getElementById('vr-roll').textContent = data.credential.roll_no;
             document.getElementById('vr-degree').textContent = data.credential.degree;
-            document.getElementById('vr-cgpa').textContent = vrCgpaVal;
+            document.getElementById('vr-date').textContent = new Date(data.credential.issue_date).toLocaleDateString();
+
+            const cfContainer = document.getElementById('vr-custom-fields-container');
+            if (cfContainer) {
+                cfContainer.innerHTML = '';
+                if (data.credential.custom_fields) {
+                    for (const [key, val] of Object.entries(data.credential.custom_fields)) {
+                        const label = key.replace(/_/g, ' ').toUpperCase();
+                        cfContainer.innerHTML += `
+                            <div class="result-grid" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200);">
+                                <div class="result-grid-item" style="grid-column: 1 / -1;">
+                                    <div class="label">${label}</div>
+                                    <div class="value" style="color: var(--primary);">${val}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            }
             document.getElementById('vr-date').textContent = new Date(data.credential.issue_date).toLocaleDateString();
         } else {
             card.style.display = 'none';

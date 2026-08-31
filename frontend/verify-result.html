@@ -101,11 +101,7 @@
                     </div>
                 </div>
                 <div class="dc-grid">
-                    <div class="dc-cell">
-                        <div class="dc-label">CGPA</div>
-                        <div class="dc-val text-green" id="vr-cgpa">-</div>
-                    </div>
-                    <div class="dc-cell">
+                    <div class="dc-cell" style="grid-column: 1 / -1;">
                         <div class="dc-label">DATE OF ISSUE</div>
                         <div class="dc-val" id="vr-issue-date">-</div>
                     </div>
@@ -183,12 +179,6 @@
                 document.getElementById('vr-student-name').textContent = data.credential?.student_name || '-';
                 document.getElementById('vr-roll-no').textContent = data.credential?.roll_no || '-';
                 document.getElementById('vr-degree').textContent = data.credential?.degree || '-';
-                let cgpaVal = '-';
-                if (data.credential?.custom_fields) {
-                    const cgpaKey = Object.keys(data.credential.custom_fields).find(k => k.toUpperCase() === 'CGPA');
-                    if (cgpaKey) cgpaVal = data.credential.custom_fields[cgpaKey];
-                }
-                document.getElementById('vr-cgpa').textContent = cgpaVal;
                 document.getElementById('vr-issue-date').textContent = data.credential?.issue_date || '-';
                 
                 // Inject any other custom fields
@@ -196,7 +186,6 @@
                 cfContainer.innerHTML = '';
                 if (data.credential?.custom_fields) {
                     for (const [key, val] of Object.entries(data.credential.custom_fields)) {
-                        if (key.toUpperCase() === 'CGPA') continue; // already displayed
                         const label = key.replace(/_/g, ' ').toUpperCase();
                         cfContainer.innerHTML += `
                             <div class="dc-grid" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-200);">

@@ -54,7 +54,7 @@ class IssueRequest(BaseModel):
     student_name: str
     roll_no: str
     degree: str
-    cgpa: Optional[str] = None
+    #cgpa: Optional[str] = None
     issue_date: date
     custom_fields: dict | None = None  # institution-defined extra fields
 
@@ -80,7 +80,7 @@ class CredentialOut(BaseModel):
     student_name: str
     roll_no: str
     degree: str
-    cgpa: Optional[str] = None
+    #cgpa: Optional[str] = None
     issue_date: date
     custom_fields: dict | None = None
     prev_hash: str
@@ -105,7 +105,7 @@ class CredentialSummary(BaseModel):
     student_name: str
     degree: str
     roll_no: str
-    cgpa: Optional[str] = None
+    #cgpa: Optional[str] = None
     issue_date: date
     institution_name: str
     custom_fields: dict | None = None

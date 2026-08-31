@@ -108,7 +108,7 @@ def verify_credential(db: Session, cred_uuid: _uuid.UUID) -> VerifyResponse:
         student_name=credential.student_name,
         degree=credential.degree,
         roll_no=credential.roll_no,
-        cgpa=credential.cgpa,
+        #cgpa=credential.cgpa,
         issue_date=credential.issue_date,
         institution_name=institution.name if institution else "Unknown",
         custom_fields=credential.custom_fields,

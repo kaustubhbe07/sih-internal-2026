@@ -40,7 +40,7 @@ class CredentialRecord(Base):
     student_name = Column(Text, nullable=False)
     roll_no = Column(Text, nullable=False)
     degree = Column(Text, nullable=False)
-    cgpa = Column(Text, nullable=True)
+    #cgpa = Column(Text, nullable=True)
     issue_date = Column(Date, nullable=False)
     custom_fields = Column(JSON, nullable=True)         
     prev_hash = Column(Text, nullable=False)
