@@ -1,29 +1,9 @@
 import hashlib
 import json
 
-# FIELD_ORDER = [
-#     "credential_id",
-#     "student_id",
-#     "student_name",
-#     "course_name",
-#     "grade",
-#     "issue_date",
-# ]
-
 GENESIS_HASH = "0" * 64
 
-# def serialize_record(record:dict)-> str:
-#     ordered={field:record[field] for field in FIELD_ORDER}
-#     return json.dumps(
-#         ordered,
-#         sort_keys=False,
-#         separators=(",",":"),
-#         ensure_ascii=True
-#     )
-
 def compute_hash(fields:dict, prev_hash:str)->str:
-    # payload=serialize_record(record)+prev_hash
-    # return hashlib.sha256(payload.encode("utf-8")).hexdigest()
     sorted_fields=json.dumps(fields, sort_keys=True,separators=(",",":"),ensure_ascii=True)
     payload=sorted_fields+prev_hash
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()

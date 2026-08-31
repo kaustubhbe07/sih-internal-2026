@@ -58,7 +58,6 @@ def issue_credential(
         student_name=body.student_name,
         roll_no=body.roll_no,
         degree=body.degree,
-        cgpa=body.cgpa,
         issue_date=body.issue_date,
         prev_hash=prev_hash,
         custom_fields=body.custom_fields,
@@ -156,7 +155,7 @@ def bulk_issue_credentials(
                     custom_fields[cname] = row[cname].strip()
         else:
             # Prototype Mode: Allow arbitrary custom fields if no schema is strictly defined
-            standard_cols = {"student_name", "roll_no", "degree", "issue_date", "cgpa"}
+            standard_cols = {"student_name", "roll_no", "degree", "issue_date"}
             for col_name, col_val in row.items():
                 if col_name and col_name not in standard_cols and col_val and col_val.strip():
                     custom_fields[col_name] = col_val.strip()
@@ -166,7 +165,6 @@ def bulk_issue_credentials(
             "student_name": row["student_name"].strip(),
             "roll_no": row["roll_no"].strip(),
             "degree": row["degree"].strip(),
-            "cgpa": row.get("cgpa", "").strip() or None,
             "issue_date": parsed_date,
             "custom_fields": custom_fields if custom_fields else None,
         })
@@ -262,7 +260,6 @@ def _credential_to_out(c, db: Session) -> CredentialOut:
         student_name=c.student_name,
         roll_no=c.roll_no,
         degree=c.degree,
-        cgpa=c.cgpa,
         issue_date=c.issue_date,
         custom_fields=c.custom_fields,
         prev_hash=c.prev_hash,

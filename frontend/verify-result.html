@@ -110,6 +110,7 @@
                         <div class="dc-val" id="vr-issue-date">-</div>
                     </div>
                 </div>
+                <div id="vr-custom-fields-container"></div>
             </div>
             
             <div class="crypto-card">
@@ -182,8 +183,27 @@
                 document.getElementById('vr-student-name').textContent = data.credential?.student_name || '-';
                 document.getElementById('vr-roll-no').textContent = data.credential?.roll_no || '-';
                 document.getElementById('vr-degree').textContent = data.credential?.degree || '-';
-                document.getElementById('vr-cgpa').textContent = data.credential?.cgpa || '-';
+                document.getElementById('vr-cgpa').textContent = (data.credential?.custom_fields && data.credential.custom_fields['CGPA']) ? data.credential.custom_fields['CGPA'] : '-';
                 document.getElementById('vr-issue-date').textContent = data.credential?.issue_date || '-';
+                
+                // Inject any other custom fields
+                const cfContainer = document.getElementById('vr-custom-fields-container');
+                cfContainer.innerHTML = '';
+                if (data.credential?.custom_fields) {
+                    for (const [key, val] of Object.entries(data.credential.custom_fields)) {
+                        if (key.toUpperCase() === 'CGPA') continue; // already displayed
+                        const label = key.replace(/_/g, ' ').toUpperCase();
+                        cfContainer.innerHTML += `
+                            <div class="dc-grid" style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-200);">
+                                <div class="dc-cell" style="grid-column: 1 / -1;">
+                                    <div class="dc-label">${label}</div>
+                                    <div class="dc-val" style="color: var(--primary);">${val}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
                 document.getElementById('vr-block-hash').textContent = data.hash_valid ? 'Valid (SHA-256 Verified)' : 'Invalid';
                 document.getElementById('vr-cred-id').textContent = id;
                 

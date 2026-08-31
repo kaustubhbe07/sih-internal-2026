@@ -151,18 +151,12 @@ async function issueCredential(e) {
         }
     });
 
-    // We can extract CGPA if it was added as a custom field (or send as normal)
-    let cgpa = null;
-    if (customFields["CGPA"]) {
-        cgpa = customFields["CGPA"];
-        delete customFields["CGPA"];
-    }
+    // CGPA is now kept inside customFields as requested
 
     const payload = {
         student_name: name,
         roll_no: roll,
         degree: degree,
-        cgpa: cgpa,
         issue_date: issueDate,
         custom_fields: Object.keys(customFields).length > 0 ? customFields : null
     };
@@ -375,7 +369,7 @@ function openRegistryModal(credId) {
         student_name: cred.student_name,
         roll_no: cred.roll_no,
         degree: cred.degree,
-        cgpa: cred.cgpa,
+        cgpa: cred.custom_fields ? cred.custom_fields["CGPA"] : null,
         issue_date: cred.issue_date,
         custom_fields: cred.custom_fields,
         prev_hash: cred.prev_hash
@@ -610,7 +604,7 @@ async function verifyCredential() {
             document.getElementById('vr-initials').textContent = data.credential.student_name.substring(0, 2).toUpperCase();
             document.getElementById('vr-roll').textContent = data.credential.roll_no;
             document.getElementById('vr-degree').textContent = data.credential.degree;
-            document.getElementById('vr-cgpa').textContent = data.credential.cgpa || 'N/A';
+            document.getElementById('vr-cgpa').textContent = (data.credential.custom_fields && data.credential.custom_fields['CGPA']) ? data.credential.custom_fields['CGPA'] : 'N/A';
             document.getElementById('vr-date').textContent = new Date(data.credential.issue_date).toLocaleDateString();
         } else {
             card.style.display = 'none';
